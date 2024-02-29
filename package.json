@@ -1,5 +1,5 @@
 {
-	"name": "project",
+	"name": "@wajeht/project",
 	"version": "0.0.1",
 	"description": "project scaffolder",
 	"main": "./dist/src/index.js",

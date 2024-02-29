@@ -2,12 +2,34 @@
   "name": "project",
   "version": "0.0.1",
   "description": "project scaffolder",
-  "main": "index.js",
+  "main": "./dist/src/index.js",
+  "bin": {
+		"project": "./dist/src/index.js"
+	},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "cli": "npm unlink cdns && rm -rf ./dist && npm run build && chmod +x ./dist/src/index.js && npm link",
+		"dev": "npm run cli && tsc -w",
+		"build": "tsc --noImplicitAny",
+    "format:check": "prettier --check .",
+		"format": "prettier --write .",
+		"lint:check": "eslint .",
+		"lint": "eslint --fix .",
+		"test:watch": "vitest",
+		"test": "vitest --run"
   },
   "keywords": [],
-  "author": "wajeht",
+  "author": "@wajeht",
+  "publishConfig": {
+		"registry": "https://registry.npmjs.org/",
+		"access": "public"
+	},
+  "repository": {
+		"type": "git",
+		"url": "git+https://github.com/wajeht/project.git"
+	},
+	"bugs": {
+		"url": "https://github.com/wajeht/project/issues"
+	},
   "license": "MIT",
   "dependencies": {
     "typescript": "^5.3.3"

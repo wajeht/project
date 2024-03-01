@@ -19,6 +19,12 @@ async function main() {
             message: 'Initilialize git?',
             validate: (value) => (value.length ? true : false),
         },
+        {
+            type: 'confirm',
+            name: 'typescript',
+            message: 'Typescript?',
+            validate: (value) => (value.length ? true : false),
+        },
     ]);
     console.log(response);
 }

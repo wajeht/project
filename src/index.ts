@@ -2,13 +2,23 @@
 
 import prompts from 'prompts';
 
-(async () => {
-	const response = await prompts({
-		type: 'number',
-		name: 'value',
-		message: 'How old are you?',
-		validate: (value: number) => (value < 18 ? `Nightclub is 18+ only` : true),
-	});
+async function main() {
+	const response = await prompts([
+		{
+			type: 'text',
+			name: 'projectName',
+			message: 'Project name?',
+			validate: (value: string) => (value.length ? true : false),
+		},
+		{
+			type: 'confirm',
+			name: 'gitInit',
+			message: 'Initilialize git?',
+			validate: (value: string) => (value.length ? true : false),
+		},
+	]);
 
-	console.log(response); // => { value: 24 }
-})();
+	console.log(response);
+}
+
+main();

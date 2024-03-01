@@ -8,7 +8,7 @@
 	},
 	"scripts": {
 		"postinstall": "chmod +x ./dist/src/scripts/post-install.js && ./dist/src/scripts/post-install.js",
-		"cli": "npm unlink cdns && rm -rf ./dist && npm run build && chmod +x ./dist/src/index.js && npm link",
+		"cli": "npm unlink project && rm -rf ./dist && npm run build && chmod +x ./dist/src/index.js && npm link",
 		"dev": "npm run cli && tsc -w",
 		"build": "tsc --noImplicitAny",
 		"format:check": "prettier --check .",

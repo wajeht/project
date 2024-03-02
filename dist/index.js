@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const prompts_1 = __importDefault(require("prompts"));
+const fs_1 = __importDefault(require("fs"));
 async function main() {
     const response = await (0, prompts_1.default)([
         {
@@ -26,6 +27,14 @@ async function main() {
             validate: (value) => (value.length ? true : false),
         },
     ]);
+    // make folder
+    if (response.projectName) {
+        const projectNameFolderPath = process.cwd() + `/${response.projectName}`;
+        if (!fs_1.default.existsSync(projectNameFolderPath)) {
+            fs_1.default.mkdirSync(projectNameFolderPath, { recursive: true });
+        }
+    }
+    console.log(process.cwd());
     console.log(response);
 }
 main();

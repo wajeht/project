@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-
 import prompts from 'prompts';
+import fs from 'fs';
 
 async function main() {
 	const response = await prompts([
@@ -24,6 +24,15 @@ async function main() {
 		},
 	]);
 
+	// make folder
+	if (response.projectName) {
+		const projectNameFolderPath = process.cwd() + `/${response.projectName}`;
+		if (!fs.existsSync(projectNameFolderPath)) {
+			fs.mkdirSync(projectNameFolderPath, { recursive: true });
+		}
+	}
+
+	console.log(process.cwd());
 	console.log(response);
 }
 

@@ -66,7 +66,25 @@ async function main() {
 		console.error('Error copying template files:', error);
 	}
 
-	// rename some stuff
+	// remove package-lock json
+	const packageLockJson = `${projectNameFolderPath}/package-lock.json`;
+	try {
+		fs.unlinkSync(packageLockJson);
+	} catch (error) {
+		console.error('Error removing package-lock.json:', error);
+	}
+
+	// rename stuff
+	const packageJsonPath = `${projectNameFolderPath}/package.json`;
+	try {
+		const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'));
+		packageJson['name'] = response.name;
+		packageJson['description'] = response.description;
+		packageJson['author'] = response.author;
+		fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2));
+	} catch (error) {
+		console.error('Error reading or writing package.json:', error);
+	}
 
 	console.log('\n' + `cd ${response.name}`);
 	console.log('npm install');

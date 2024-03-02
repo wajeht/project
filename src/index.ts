@@ -1,7 +1,9 @@
 #!/usr/bin/env node
-import prompts from 'prompts';
+
 import fs from 'fs';
-import { exec } from 'child_process';
+import path from 'path';
+import prompts from 'prompts';
+import cp from 'child_process';
 
 async function main() {
 	const response = await prompts([
@@ -42,13 +44,20 @@ async function main() {
 	}
 
 	// git init
-	exec(`git init`, { cwd: projectNameFolderPath }, (err, stdout, stderr) => {
+	cp.exec(`git init`, { cwd: projectNameFolderPath }, (err, stdout, stderr) => {
 		if (err) console.log(err);
 		if (stdout) console.log(stdout);
 		if (stderr) console.log(stderr);
 	});
 
-	console.log(response);
+	// copy project files
+	const template = path.resolve(path.join(__dirname, '..', 'src', 'templates', 'typescript'));
+	try {
+		fs.cpSync(template, projectNameFolderPath, { recursive: true });
+		console.log('Template files copied successfully.');
+	} catch (error) {
+		console.error('Error copying template files:', error);
+	}
 }
 
 main();

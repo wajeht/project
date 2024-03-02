@@ -4,9 +4,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const prompts_1 = __importDefault(require("prompts"));
 const fs_1 = __importDefault(require("fs"));
-const child_process_1 = require("child_process");
+const path_1 = __importDefault(require("path"));
+const prompts_1 = __importDefault(require("prompts"));
+const child_process_1 = __importDefault(require("child_process"));
 async function main() {
     const response = await (0, prompts_1.default)([
         {
@@ -44,7 +45,7 @@ async function main() {
         return;
     }
     // git init
-    (0, child_process_1.exec)(`git init`, { cwd: projectNameFolderPath }, (err, stdout, stderr) => {
+    child_process_1.default.exec(`git init`, { cwd: projectNameFolderPath }, (err, stdout, stderr) => {
         if (err)
             console.log(err);
         if (stdout)
@@ -52,6 +53,14 @@ async function main() {
         if (stderr)
             console.log(stderr);
     });
-    console.log(response);
+    // copy project files
+    const template = path_1.default.resolve(path_1.default.join(__dirname, '..', 'src', 'templates', 'typescript'));
+    try {
+        fs_1.default.cpSync(template, projectNameFolderPath, { recursive: true });
+        console.log('Template files copied successfully.');
+    }
+    catch (error) {
+        console.error('Error copying template files:', error);
+    }
 }
 main();

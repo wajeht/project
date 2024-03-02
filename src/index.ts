@@ -50,11 +50,12 @@ async function main() {
 	}
 
 	// git init
-	cp.exec(`git init`, { cwd: projectNameFolderPath }, (err, stdout, stderr) => {
-		if (err) console.log(err);
-		if (stdout) console.log(stdout);
-		if (stderr) console.log(stderr);
-	});
+	try {
+		const stdout = cp.execSync(`git init`, { cwd: projectNameFolderPath });
+		console.log('\n' + stdout.toString());
+	} catch (error) {
+		console.error(`Error: ${error}`);
+	}
 
 	// copy project files
 	const template = path.resolve(path.join(__dirname, '..', 'src', 'templates', 'typescript'));
@@ -64,6 +65,12 @@ async function main() {
 	} catch (error) {
 		console.error('Error copying template files:', error);
 	}
+
+	// rename some stuff
+
+	console.log('\n' + `cd ${response.name}`);
+	console.log('npm install');
+	console.log('npm run dev\n');
 }
 
 main();

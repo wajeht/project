@@ -51,14 +51,13 @@ async function main() {
         return;
     }
     // git init
-    child_process_1.default.exec(`git init`, { cwd: projectNameFolderPath }, (err, stdout, stderr) => {
-        if (err)
-            console.log(err);
-        if (stdout)
-            console.log(stdout);
-        if (stderr)
-            console.log(stderr);
-    });
+    try {
+        const stdout = child_process_1.default.execSync(`git init`, { cwd: projectNameFolderPath });
+        console.log('\n' + stdout.toString());
+    }
+    catch (error) {
+        console.error(`Error: ${error}`);
+    }
     // copy project files
     const template = path_1.default.resolve(path_1.default.join(__dirname, '..', 'src', 'templates', 'typescript'));
     try {
@@ -68,5 +67,9 @@ async function main() {
     catch (error) {
         console.error('Error copying template files:', error);
     }
+    // rename some stuff
+    console.log('\n' + `cd ${response.name}`);
+    console.log('npm install');
+    console.log('npm run dev\n');
 }
 main();

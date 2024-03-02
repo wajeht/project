@@ -14,5 +14,6 @@
 		"forceConsistentCasingInFileNames": true,
 		"moduleResolution": "node16"
 	},
-	"include": ["src"]
+	"include": ["src"],
+	"exclude": ["./src/templates/typescript/*", "src/templates/typescript"]
 }

@@ -12,6 +12,12 @@ async function main() {
 			validate: (value: string) => (value.length ? true : false),
 		},
 		{
+			type: 'text',
+			name: 'description',
+			message: 'Description',
+			validate: (value: string) => (value.length ? true : false),
+		},
+		{
 			type: 'confirm',
 			name: 'gitInit',
 			message: 'Initilialize git?',

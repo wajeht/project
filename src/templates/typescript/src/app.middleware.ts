@@ -13,7 +13,7 @@ export function healthCheckHandler(
 
 export function notFoundHandler(req: Request, res: Response, next: NextFunction): Response | void {
 	return res.status(StatusCodes.NOT_FOUND).json({
-		message: 'Resource not found',
+		message: 'not found',
 	});
 }
 

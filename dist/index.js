@@ -12,20 +12,26 @@ async function main() {
     const response = await (0, prompts_1.default)([
         {
             type: 'text',
-            name: 'projectName',
-            message: 'Project name?',
+            name: 'name',
+            message: 'Name?',
             validate: (value) => (value.length ? true : false),
         },
         {
             type: 'text',
             name: 'description',
-            message: 'Description',
+            message: 'Description?',
+            validate: (value) => (value.length ? true : false),
+        },
+        {
+            type: 'text',
+            name: 'author',
+            message: 'Author?',
             validate: (value) => (value.length ? true : false),
         },
         {
             type: 'confirm',
-            name: 'gitInit',
-            message: 'Initilialize git?',
+            name: 'git',
+            message: 'Git?',
             validate: (value) => (value.length ? true : false),
         },
         {
@@ -35,7 +41,7 @@ async function main() {
             validate: (value) => (value.length ? true : false),
         },
     ]);
-    const projectNameFolderPath = `${process.cwd()}/${response.projectName}`;
+    const projectNameFolderPath = `${process.cwd()}/${response.name}`;
     // make folder
     if (!fs_1.default.existsSync(projectNameFolderPath)) {
         fs_1.default.mkdirSync(projectNameFolderPath, { recursive: true });

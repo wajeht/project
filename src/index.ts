@@ -9,20 +9,26 @@ async function main() {
 	const response = await prompts([
 		{
 			type: 'text',
-			name: 'projectName',
-			message: 'Project name?',
+			name: 'name',
+			message: 'Name?',
 			validate: (value: string) => (value.length ? true : false),
 		},
 		{
 			type: 'text',
 			name: 'description',
-			message: 'Description',
+			message: 'Description?',
+			validate: (value: string) => (value.length ? true : false),
+		},
+		{
+			type: 'text',
+			name: 'author',
+			message: 'Author?',
 			validate: (value: string) => (value.length ? true : false),
 		},
 		{
 			type: 'confirm',
-			name: 'gitInit',
-			message: 'Initilialize git?',
+			name: 'git',
+			message: 'Git?',
 			validate: (value: string) => (value.length ? true : false),
 		},
 		{
@@ -33,7 +39,7 @@ async function main() {
 		},
 	]);
 
-	const projectNameFolderPath = `${process.cwd()}/${response.projectName}`;
+	const projectNameFolderPath = `${process.cwd()}/${response.name}`;
 
 	// make folder
 	if (!fs.existsSync(projectNameFolderPath)) {

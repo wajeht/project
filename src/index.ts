@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import prompts from 'prompts';
 import fs from 'fs';
+import { exec } from 'child_process';
 
 async function main() {
 	const response = await prompts([
@@ -24,15 +25,23 @@ async function main() {
 		},
 	]);
 
+	const projectNameFolderPath = `${process.cwd()}/${response.projectName}`;
+
 	// make folder
-	if (response.projectName) {
-		const projectNameFolderPath = process.cwd() + `/${response.projectName}`;
-		if (!fs.existsSync(projectNameFolderPath)) {
-			fs.mkdirSync(projectNameFolderPath, { recursive: true });
-		}
+	if (!fs.existsSync(projectNameFolderPath)) {
+		fs.mkdirSync(projectNameFolderPath, { recursive: true });
+	} else {
+		console.error('Folder exists already');
+		return;
 	}
 
-	console.log(process.cwd());
+	// git init
+	exec(`git init`, { cwd: projectNameFolderPath }, (err, stdout, stderr) => {
+		if (err) console.log(err);
+		if (stdout) console.log(stdout);
+		if (stderr) console.log(stderr);
+	});
+
 	console.log(response);
 }
 

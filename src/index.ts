@@ -86,8 +86,14 @@ async function main() {
 		console.error('Error reading or writing package.json:', error);
 	}
 
+	// install npm
+	const npmInstall = cp.spawn('npm', ['install'], { cwd: projectNameFolderPath });
+	npmInstall.stdout.on('data', (data) => console.log(data.toString()));
+	npmInstall.stderr.on('data', (data) => console.error(data.toString()));
+	npmInstall.on('error', (error) => console.error(`Spawn error: ${error}`));
+
 	console.log('\n' + `cd ${response.name}`);
-	console.log('npm install');
+	// console.log('npm install');
 	console.log('npm run dev\n');
 }
 
